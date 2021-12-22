@@ -1,0 +1,53 @@
+version: '3.3'
+
+services:
+  web:
+    build: .
+    command: bash -c "python manage.py makemigrations && python manage.py migrate && python manage.py runserver 0.0.0.0:6000"
+    ports:
+      - 6000:6000
+    env_file:
+      - ./.env.dev
+    volumes:
+      - migrations-volume:/weather_api/weather_api/migrations/
+    depends_on:
+      - db
+    restart: always
+    networks:
+      - web_network
+      - data_network
+
+  db:
+    image: postgres:11
+    ports:
+    - "5432:5432"
+    volumes:
+    - ./database/postgres_data:/var/lib/postgresql/data/
+    networks:
+    - data_network
+    environment:
+    - POSTGRES_USER=student
+    - POSTGRES_PASSWORD=root
+    - POSTGRES_DB=weatherdb
+    
+  pgadmin:
+      image: dpage/pgadmin4
+      ports:
+        - "5051:80"
+      environment:
+        PGADMIN_DEFAULT_EMAIL: pgadmin4@pgadmin.org
+        PGADMIN_DEFAULT_PASSWORD: root
+      depends_on:
+      - db
+      restart: always
+      networks:
+      - data_network
+
+networks:
+  data_network:
+    driver: bridge
+  web_network:
+    driver: bridge
+
+volumes:
+  migrations-volume:
