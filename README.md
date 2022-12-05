@@ -31,7 +31,7 @@ run ```sudo service postgresql stop```.
 # 3. pgadmin service
 - pgAdmin is an open source tool which provides a GUI for handling and managing the database in an easier manner. 
 - The container will run the dpage/pgadmin4 image from Docker Hub
-- The port 5051 on the host machine will be mapped on the 80 port in the container. 
+- The port 5050 on the host machine will be mapped on the 80 port in the container. 
 - The e-mail ```pgadmin4@pgadmin.org``` and the password ```root``` will be the credentials for the GUI tool.
 - The tool will only be started once the db service started and it will be restarted until the operation is successful. 
 - The pgadmin container is deployed in the backend network. 
@@ -52,10 +52,10 @@ For running/testing the weather api the following steps have to be followed:
 2. Run the tests in Postman on port 6000.
 
 3. Open pgAdmin. 
-    a. In browser type:  ```http://localhost:5051/``` and log in with the credentials: 
+ 3.1. In browser type:  ```http://localhost:5050/``` and log in with the credentials: 
 - pgadmin4@pgadmin.org
 - root
-    b. Add New Server.
+ 3.2. Add New Server.
     In General: 
 - Name = a name of your choice
     In Connection:
@@ -63,3 +63,10 @@ For running/testing the weather api the following steps have to be followed:
 - Port: 5432
 - Username: student
 - Password: root
+
+# Testing
+The API can be tested using Postman with the Test_data collection. Import it and make sure the tests are run in the following order: 
+<img src="https://i.imgur.com/dplg0oT.png" width="400" height="500" />
+
+If Postman is not run locally, make sure to replace "localhost" with your address. 
+
